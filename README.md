@@ -1,5 +1,3 @@
----
-
 ## Project Structure
 
 ```
@@ -20,5 +18,3 @@ celestia/
             ├── get_telescope_status.py
             └── manual_slew.py
 ```
-
----
