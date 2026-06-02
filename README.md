@@ -4,11 +4,13 @@
 celestia/
 ├── pyproject.toml
 ├── README.md
+├── SKILL.md
 ├── .env.example
 └── src/
     └── celestia/
-        ├── server.py            # Entry point, registers all tools
-        ├── backend_client.py    # All HTTP calls to the backend
+        ├── server.py
+        ├── backend_client.py
+        ├── target_classifier.py
         └── tools/
             ├── point_to.py
             ├── get_calibration_status.py

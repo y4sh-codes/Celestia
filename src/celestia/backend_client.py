@@ -13,7 +13,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Read backend URL once at import time; fail loudly if missing
-BACKEND_BASE_URL = os.getenv("BACKEND_BASE_URL", "http://localhost:8000").rstrip("/")
+BACKEND_BASE_URL = os.getenv("BACKEND_BASE_URL").rstrip("/")
 
 # Shared timeout so every request has a sensible limit
 _TIMEOUT = httpx.Timeout(10.0)
@@ -40,14 +40,29 @@ def _handle_response(response: httpx.Response) -> dict | list:
 
 # ── Tool-specific methods ──────────────────────────────────────────────────────
 
-def point_to(target: str) -> dict:
+def point_to(target: str, resolver: str, input_body: dict) -> dict:
     """
     Tell the backend to start pointing the telescope at a named target.
-    Returns a job object so the caller can track progress.
+
+    The tool layer classifies the target and builds input_body before calling
+    this — we just forward the ready-made payload so the backend knows exactly
+    which resolver to use and what to pass to it.
+
+    Args:
+        target:     Human-readable name (for logging / job metadata).
+        resolver:   "horizons" for solar system bodies, "simbad" for deep sky.
+        input_body: Pre-formatted dict for the chosen resolver.
+                    Horizons -> {id, location, epochs, id_type}
+                    Simbad   -> {name}
     """
+    payload = {
+        "target": target,
+        "resolver": resolver,
+        "input_body": input_body,
+    }
     with _client() as client:
         try:
-            resp = client.post("/point", json={"target": target})
+            resp = client.post("/point", json=payload)
         except httpx.ConnectError:
             raise RuntimeError(f"Cannot reach backend at {BACKEND_BASE_URL}")
         except httpx.TimeoutException:
