@@ -1,3 +1,29 @@
+## Architecture
+
+```
+Claude Desktop / Cursor
+        │
+        │  MCP (stdio)
+        ▼
+  celestia  ◄── You are here
+  (this server)
+        │
+        │  HTTP (httpx)
+        ▼
+  CAPIBARA Backend API
+  (telescope logic, plate solving,
+   calibration, camera, hardware)
+        │
+        ▼
+  Telescope Hardware
+```
+
+The MCP server is intentionally thin:
+1. Receive tool call from Claude
+2. Validate arguments
+3. Forward to backend
+4. Return result
+
 ## Project Structure
 
 ```
