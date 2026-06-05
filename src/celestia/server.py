@@ -40,10 +40,10 @@ def _register_tools() -> None:
 def main() -> None:
     """Start the MCP server (called by the Poetry script entry point)."""
     # Log to stderr — stdout is reserved for the MCP stdio protocol
-    print(" Celestia MCP server starting", file=sys.stderr)
+    print("🔭 Celestia MCP server starting...", file=sys.stderr)
     _register_tools()
-    print(" 7 tools registered and ready", file=sys.stderr)
-    print(f" Waiting for MCP client (Claude Desktop / Cursor)", file=sys.stderr)
+    print("✅ 7 tools registered and ready", file=sys.stderr)
+    print(f"⏳ Waiting for MCP client (Claude Desktop / Cursor)...", file=sys.stderr)
     mcp.run()
 
 

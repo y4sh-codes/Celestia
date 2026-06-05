@@ -95,6 +95,12 @@ def register(mcp: FastMCP) -> None:
             target:     Human-readable name of the object (used for job metadata).
             resolver:   "horizons" for solar system bodies, "simbad" for deep sky objects.
             input_body: Pre-formatted dict for the chosen resolver (see formats above).
+
+        AFTER CALLING THIS TOOL
+        ────────────────────────
+        If the response contains a job_id, YOU (Claude) must IMMEDIATELY call
+        get_calibration_status with that job_id — without waiting for the user
+        to ask. This starts the live calibration log automatically.
         """
         if not target.strip():
             return "Error: target name cannot be empty."
