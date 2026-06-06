@@ -3,6 +3,7 @@
 MCP server that lets Claude Desktop and Cursor control a telescope through natural language. You say "point to Jupiter" — CAPIBARA figures out the rest.
 
 ---
+![Capibara MCP design](assets/Capibara MCP deisgn.png)
 
 ## Architecture
 
